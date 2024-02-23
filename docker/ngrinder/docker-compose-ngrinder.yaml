@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  controller:
+    image: ghkdqhrbals/ngrinder-controller:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "16001:16001"
+      - "12000-12009:12000-12009"
+    volumes:
+      - ~/ngrinder-controller:/opt/ngrinder-controller
+  agent:
+    image: ghkdqhrbals/ngrinder-agent:latest
+    restart: always
+    links:
+      - controller
