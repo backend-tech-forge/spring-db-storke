@@ -21,6 +21,11 @@ public enum ErrorCode {
     FORBIDDEN(403, "권한이 없는 사용자입니다"),
 
     /**
+     * 404
+     */
+    BOARD_NOT_FOUND(404, "보드가 존재하지 않습니다"),
+
+    /**
      * 500
      */
     SERVER_DEFAULT_ERROR(500, "서버 내부오류"),

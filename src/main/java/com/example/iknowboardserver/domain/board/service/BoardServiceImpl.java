@@ -5,6 +5,8 @@ import com.example.iknowboardserver.domain.board.controller.form.BoardPostReques
 import com.example.iknowboardserver.domain.board.controller.form.BoardPutRequestForm;
 import com.example.iknowboardserver.domain.board.entity.Board;
 import com.example.iknowboardserver.domain.board.repository.BoardRepository;
+import com.example.iknowboardserver.global.error.ErrorCode;
+import com.example.iknowboardserver.global.error.GlobalException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +36,7 @@ public class BoardServiceImpl implements BoardService {
     public ResponseEntity<BoardDTO> getBoard(Long id) {
         Optional<Board> maybeBoard = boardRepository.findById(id);
         if (maybeBoard.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new GlobalException(ErrorCode.BOARD_NOT_FOUND);
         }
         Board board = maybeBoard.get();
         return ResponseEntity.ok(BoardDTO.builder()
@@ -50,7 +52,7 @@ public class BoardServiceImpl implements BoardService {
     public ResponseEntity<Map<String, Object>> updateBoard(Long id, BoardPutRequestForm reqForm) {
         Optional<Board> maybeBoard = boardRepository.findById(id);
         if (maybeBoard.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new GlobalException(ErrorCode.BOARD_NOT_FOUND);
         }
         Board board = maybeBoard.get();
         board.setTitle(reqForm.getTitle());
@@ -64,7 +66,7 @@ public class BoardServiceImpl implements BoardService {
     public ResponseEntity<Map<String, String>> deleteBoard(Long id) {
         Optional<Board> maybeBoard = boardRepository.findById(id);
         if (maybeBoard.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new GlobalException(ErrorCode.BOARD_NOT_FOUND);
         }
         boardRepository.deleteById(id);
         return ResponseEntity.ok(Map.of("id", id.toString(), "status", "deleted"));
