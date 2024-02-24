@@ -9,7 +9,7 @@ Once you have the above installed, you can run the following command to start th
 
 1. Start the local database
     ```bash
-    docker-compose -f docker-compose-test.yaml up -d
+    docker-compose -f docker-compose-db.yaml up -d
     ```
 2. Build & Run the application
     ```bash
